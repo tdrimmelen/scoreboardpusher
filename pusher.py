@@ -11,13 +11,17 @@ table_service = TableService(account_name=azurestorageaccount, account_key=azure
 
 response = urllib.urlopen(scoreboardurl)
 data = json.loads(response.read())
-print data
+data['PartitionKey'] = partitionkey
+data['RowKey'] = '1'
+print(data)
 
-table_service.insert_or_replace_entity('score', partitionkey, '1', data)
+table_service.insert_or_replace_entity('score', data)
 
 response = urllib.urlopen(timeclockurl)
 data = json.loads(response.read())
-print data
+data['PartitionKey'] = partitionkey
+data['RowKey'] = '1'
+print(data)
 
-table_service.insert_or_replace_entity('time', partitionkey, '1', data)
+table_service.insert_or_replace_entity('time', data)
 
