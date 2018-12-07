@@ -1,4 +1,5 @@
-from azure.storage.table import TableService, Entity
+from azure.cosmosdb.table.tableservice import TableService
+from azure.cosmosdb.table.models import Entity
 import urllib, json
 
 azurestorageaccount = '<storage account name>'
@@ -11,16 +12,16 @@ table_service = TableService(account_name=azurestorageaccount, account_key=azure
 
 response = urllib.urlopen(scoreboardurl)
 data = json.loads(response.read())
-data['PartitionKey'] = partitionkey
-data['RowKey'] = '1'
+data[u'PartitionKey'] = partitionkey
+data[u'RowKey'] = '1'
 print(data)
 
 table_service.insert_or_replace_entity('score', data)
 
 response = urllib.urlopen(timeclockurl)
 data = json.loads(response.read())
-data['PartitionKey'] = partitionkey
-data['RowKey'] = '1'
+data[u'PartitionKey'] = partitionkey
+data[u'RowKey'] = '1'
 print(data)
 
 table_service.insert_or_replace_entity('time', data)
